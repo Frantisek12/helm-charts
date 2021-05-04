@@ -24,16 +24,16 @@ maintainers:
     email: naseem@transit.app
   - name: pavelnikolov
     email: pavel.nikolov@fairfaxmedia.com.au
-dependencies:
-  - name: cassandra
-    version: 0.15.3
-    repository: https://charts.helm.sh/incubator
-    condition: provisionDataStore.cassandra
-  - name: elasticsearch
-    version: ^7.11.1
-    repository: https://helm.elastic.co
-    condition: provisionDataStore.elasticsearch
-  - name: kafka
-    version: ^12.16.0
-    repository: https://charts.bitnami.com/bitnami
-    condition: provisionDataStore.kafka
+# dependencies:
+#   - name: cassandra
+#     version: 0.15.3
+#     repository: https://charts.helm.sh/incubator
+#     condition: provisionDataStore.cassandra
+#   - name: elasticsearch
+#     version: ^7.11.1
+#     repository: https://helm.elastic.co
+#     condition: provisionDataStore.elasticsearch
+#   - name: kafka
+#     version: ^12.16.0
+#     repository: https://charts.bitnami.com/bitnami
+#     condition: provisionDataStore.kafka
