@@ -4,11 +4,11 @@
 {{- $legacy := false -}}
 {{- if semverCompare "<=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
   {{- $legacy := true -}}
-{{- end }}
+{{- end -}}
 
 {{- if $legacy }}
 apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
+{{- else }}
 apiVersion: networking.k8s.io/v1
 {{- end }}
 kind: Ingress
@@ -20,7 +20,7 @@ metadata:
   {{- if .Values.query.ingress.annotations }}
   annotations:
     {{- toYaml .Values.query.ingress.annotations | nindent 4 }}
-  {{- end }}
+  {{- end -}}
 spec:
   rules:
     {{- range $host := .Values.query.ingress.hosts }}
@@ -29,10 +29,11 @@ spec:
         paths:
           - path: {{ $basePath }}
             backend:
-              {{- if $legacy -}}
+
+              {{- if $legacy }}
               serviceName: {{ template "jaeger.query.name" $ }}
               servicePort: {{ $servicePort }}
-              {{- else -}}
+              {{- else }}
               service:
                 name: {{ template "jaeger.query.name" $ }}
                 port:
@@ -42,8 +43,15 @@ spec:
     {{- if .Values.query.ingress.health.exposed }}
           - path: /health
             backend:
+              {{- if $legacy }}
               serviceName: {{ template "jaeger.query.name" $ }}
               servicePort: 16687
+              {{- else }}
+              service:
+                name: {{ template "jaeger.query.name" $ }}
+                port:
+                  number: 16687
+              {{- end }}
     {{- end -}}
   {{- if .Values.query.ingress.tls }}
   tls:
