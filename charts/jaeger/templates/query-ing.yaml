@@ -20,7 +20,7 @@ metadata:
   {{- if .Values.query.ingress.annotations }}
   annotations:
     {{- toYaml .Values.query.ingress.annotations | nindent 4 }}
-  {{- end -}}
+  {{- end }}
 spec:
   rules:
     {{- range $host := .Values.query.ingress.hosts }}
