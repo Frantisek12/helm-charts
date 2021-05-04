@@ -24,8 +24,15 @@ spec:
         paths:
           - path: {{ $basePath }}
             backend:
+              {{- if semverCompare "<=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
               serviceName: {{ template "jaeger.query.name" $ }}
               servicePort: {{ $servicePort }}
+              {{- else -}}
+              service:
+                name: {{ template "jaeger.query.name" $ }}
+                port:
+                  number: {{ $servicePort }}
+              {{- end }}
     {{- end -}}
     {{- if .Values.query.ingress.health.exposed }}
           - path: /health
