@@ -28,6 +28,7 @@ spec:
       http:
         paths:
           - path: {{ $basePath }}
+            pathType: Prefix
             backend:
 
               {{- if $legacy }}
@@ -42,6 +43,7 @@ spec:
     {{- end -}}
     {{- if .Values.query.ingress.health.exposed }}
           - path: /health
+            pathType: Prefix
             backend:
               {{- if $legacy }}
               serviceName: {{ template "jaeger.query.name" $ }}
